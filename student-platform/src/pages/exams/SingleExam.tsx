@@ -79,14 +79,14 @@ const TestList: React.FC = () => {
                                         </summary>
 
                                         <div className="px-10 pb-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                                            {subject.topics.map((topic) => (
+                                            {subject.topics.map((topic: any) => (
                                                 <div key={topic._id} className="pt-2">
                                                     <h4 className="font-semibold text-blue-800 text-xs mb-1 flex items-center gap-1.5 uppercase">
                                                         <div className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
                                                         {topic.name}
                                                     </h4>
                                                     <ul className="space-y-1 border-l border-gray-200 ml-0.5 pl-3">
-                                                        {topic.subtopics.map((sub, idx) => (
+                                                        {topic.subtopics.map((sub: any, idx: number) => (
                                                             <li key={idx} className="text-xs text-gray-600 flex items-center gap-1">
                                                                 <span className="text-gray-300">-</span> {sub}
                                                             </li>
@@ -139,7 +139,7 @@ const TestList: React.FC = () => {
                             <div className="p-4 space-y-4">
                                 <div className="grid grid-cols-2 gap-2 text-xs">
                                     <div className="text-gray-500 flex items-center gap-1.5"><User className="w-3.5 h-3.5" /> Author</div>
-                                    <div className="text-gray-900 font-medium text-right">{selectedExam.createdBy?.name || 'Admin'}</div>
+                                    <div className="text-gray-900 font-medium text-right">{(selectedExam.createdBy as any)?.name || 'Admin'}</div>
 
                                     <div className="text-gray-500 flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> Updated</div>
                                     <div className="text-gray-900 font-medium text-right">{new Date(selectedExam.updatedAt).toLocaleDateString()}</div>

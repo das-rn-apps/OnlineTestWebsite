@@ -9,6 +9,11 @@ interface Exam {
     category: string;
     isActive: boolean;
     tests: any[];
+    subjects?: any[];
+    createdBy?: {
+        _id: string;
+        name: string;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;

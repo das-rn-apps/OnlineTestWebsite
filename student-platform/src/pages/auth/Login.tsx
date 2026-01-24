@@ -15,7 +15,12 @@ const Login: React.FC = () => {
 
         try {
             await login(email, password);
-            navigate('/exams');
+            const user = useAuthStore.getState().user;
+            if (user?.roleId?.name === 'admin' || user?.roleId?.name === 'super_admin') {
+                navigate('/admin/dashboard');
+            } else {
+                navigate('/dashboard');
+            }
         } catch (err: any) {
             setError(err.message || 'Login failed');
         }

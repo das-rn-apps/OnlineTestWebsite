@@ -7,7 +7,12 @@ interface User {
     _id: string;
     email: string;
     name: string;
-    roleId: string;
+    roleId: {
+        _id: string;
+        name: string;
+        permissions: string[];
+    };
+    roleName?: string; // For backward compatibility or if flattened
 }
 
 interface AuthState {

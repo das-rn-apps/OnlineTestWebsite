@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuthStore } from '../store/authStore';
-import { User, Mail, Phone, Shield, Calendar } from 'lucide-react';
+import { User, Mail, Phone, Shield } from 'lucide-react';
 
 const Profile: React.FC = () => {
     const { user } = useAuthStore();
@@ -25,7 +25,7 @@ const Profile: React.FC = () => {
                         <p className="text-sm text-gray-500">{user.email}</p>
                         <div className="mt-4 inline-flex items-center rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">
                             <Shield className="mr-1 h-3 w-3" />
-                            {user.roleName || 'Student'}
+                            {user.roleId?.name || user.roleName || 'Student'}
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@ const Profile: React.FC = () => {
                                 </div>
                                 <div>
                                     <p className="text-xs font-medium text-gray-400">Phone</p>
-                                    <p className="font-medium text-gray-900">{user.phone || 'Not provided'}</p>
+                                    <p className="font-medium text-gray-900">{(user as any).phone || 'Not provided'}</p>
                                 </div>
                             </div>
                         </div>

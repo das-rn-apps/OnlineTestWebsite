@@ -1,19 +1,19 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Users, BookOpen, CreditCard, Ticket, LogOut } from 'lucide-react';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '../../store/authStore';
 
-const Layout: React.FC = () => {
+const AdminLayout: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { user, logout } = useAuthStore();
 
     const menuItems = [
-        { path: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
-        { path: '/users', label: 'Users', icon: <Users size={20} /> },
-        { path: '/exams', label: 'Exams & Tests', icon: <BookOpen size={20} /> },
-        { path: '/subscriptions', label: 'Subscriptions', icon: <CreditCard size={20} /> },
-        { path: '/coupons', label: 'Coupons', icon: <Ticket size={20} /> },
+        { path: '/admin/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
+        { path: '/admin/users', label: 'Users', icon: <Users size={20} /> },
+        { path: '/admin/exams', label: 'Exams & Tests', icon: <BookOpen size={20} /> },
+        { path: '/admin/subscriptions', label: 'Subscriptions', icon: <CreditCard size={20} /> },
+        { path: '/admin/coupons', label: 'Coupons', icon: <Ticket size={20} /> },
     ];
 
     const handleLogout = () => {
@@ -37,8 +37,8 @@ const Layout: React.FC = () => {
                                 key={item.path}
                                 to={item.path}
                                 className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${isActive
-                                        ? 'bg-indigo-50 text-indigo-700 shadow-sm font-medium'
-                                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                                    ? 'bg-indigo-50 text-indigo-700 shadow-sm font-medium'
+                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                                     }`}
                             >
                                 {item.icon}
@@ -75,4 +75,4 @@ const Layout: React.FC = () => {
     );
 };
 
-export default Layout;
+export default AdminLayout;

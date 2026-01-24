@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import analyticsService, { DashboardStats, PerformanceStats } from '../services/analytics.service';
 import {
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-    LineChart, Line
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 import {
     Activity, Award, Clock, TrendingUp, BookOpen, AlertCircle

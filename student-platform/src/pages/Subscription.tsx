@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import subscriptionService, { Subscription } from '../services/subscription.service';
-import { Check, CreditCard, Clock, ShieldCheck } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 const SubscriptionPage: React.FC = () => {
     const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
@@ -37,7 +37,7 @@ const SubscriptionPage: React.FC = () => {
         }
     };
 
-    const activeSubscription = subscriptions.find(s => s.isActive && new Date(s.endDate) > new Date());
+
 
     const plans = [
         {
@@ -134,7 +134,7 @@ const SubscriptionPage: React.FC = () => {
                                         <td className="px-6 py-4 font-medium text-gray-900">{sub.planName}</td>
                                         <td className="px-6 py-4">
                                             <span className={`rounded-full px-2 py-1 text-xs font-semibold ${sub.isActive ? 'bg-green-100 text-green-700' :
-                                                    sub.paymentStatus === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'
+                                                sub.paymentStatus === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'
                                                 }`}>
                                                 {sub.isActive ? 'Active' : sub.paymentStatus}
                                             </span>
