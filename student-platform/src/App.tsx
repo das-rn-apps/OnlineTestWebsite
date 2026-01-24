@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from './store/authStore';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
+import SubscriptionPage from './pages/Subscription';
 import ExamList from './pages/exams/ExamList';
 import TestList from './pages/tests/TestList';
 import TestAttempt from './pages/tests/TestAttempt';
@@ -16,19 +19,42 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
 function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/exams" element={<ExamList />} />
+        <BrowserRouter
+            future={{
+                v7_startTransition: true,
+                v7_relativeSplatPath: true,
+            }}
+        >            <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                {/* <Route
-                    path="/exams"
+
+                {/* Protected Routes */}
+                <Route
+                    path="/dashboard"
                     element={
                         <ProtectedRoute>
-                            <ExamList />
+                            <Dashboard />
                         </ProtectedRoute>
                     }
-                /> */}
+                />
+                <Route
+                    path="/profile"
+                    element={
+                        <ProtectedRoute>
+                            <Profile />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/subscription"
+                    element={
+                        <ProtectedRoute>
+                            <SubscriptionPage />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route path="/exams" element={<ExamList />} />
                 <Route
                     path="/exams/:id"
                     element={
@@ -61,7 +87,7 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
-                <Route path="/" element={<Navigate to="/exams" />} />
+                <Route path="/" element={<Navigate to="/dashboard" />} />
             </Routes>
         </BrowserRouter>
     );

@@ -16,6 +16,9 @@ import attemptRoutes from './routes/attempt.routes';
 import resultRoutes from './routes/result.routes';
 import questionRoutes from './routes/question.routes';
 import userRoutes from './routes/user.routes';
+import analyticsRoutes from './routes/analytics.routes';
+import subscriptionRoutes from './routes/subscription.routes';
+import couponRoutes from './routes/coupon.routes';
 
 const app: Application = express();
 
@@ -45,6 +48,9 @@ app.get('/health', (_req, res) => {
     res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
+// Static uploads
+app.use('/uploads', express.static('uploads'));
+
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/exams', examRoutes);
@@ -54,7 +60,9 @@ app.use('/api/results', resultRoutes);
 // Additional routes can be added here:
 app.use('/api/users', userRoutes);
 app.use('/api/questions', questionRoutes);
-// app.use('/api/analytics', analyticsRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/coupons', couponRoutes);
 // app.use('/api/subscriptions', subscriptionRoutes);
 // app.use('/api/coupons', couponRoutes);
 // app.use('/api/admin', adminRoutes);
