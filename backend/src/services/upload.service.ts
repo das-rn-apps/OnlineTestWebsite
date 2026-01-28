@@ -1,4 +1,3 @@
-import { config } from '../config/env';
 
 class UploadService {
     getLocalFileUrl(filename: string): string {

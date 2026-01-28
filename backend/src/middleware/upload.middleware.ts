@@ -1,7 +1,6 @@
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-import { ApiError } from '../utils/ApiResponse';
 
 const uploadDir = path.join(__dirname, '../../uploads');
 

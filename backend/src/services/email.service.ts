@@ -1,5 +1,4 @@
 import nodemailer from 'nodemailer';
-import { config } from '../config/env';
 import logger from './logger.service';
 
 class EmailService {
