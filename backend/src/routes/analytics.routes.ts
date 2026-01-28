@@ -9,4 +9,8 @@ router.use(authenticate);
 router.get('/dashboard', analyticsController.getDashboardStats);
 router.get('/performance', analyticsController.getPerformanceStats);
 
+// Admin Analytics
+import { isAdmin } from '../middleware/rbac.middleware';
+router.get('/admin', isAdmin, analyticsController.getAdminStats);
+
 export default router;

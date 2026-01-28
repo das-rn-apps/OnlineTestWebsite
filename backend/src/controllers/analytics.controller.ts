@@ -4,6 +4,7 @@ import { ApiResponse } from '../utils/ApiResponse';
 import Attempt from '../models/Attempt.model';
 import mongoose from 'mongoose';
 import Result from '../models/Result.model';
+import Test from '../models/Test.model';
 import { AuthRequest } from '../middleware/auth.middleware';
 
 class AnalyticsController {
@@ -86,6 +87,31 @@ class AnalyticsController {
 
         res.json(
             ApiResponse.success('Performance stats fetched successfully', { subjects: subjectPerformance })
+        );
+    });
+    /**
+     * Get Admin Dashboard Stats
+     */
+    getAdminStats = asyncHandler(async (_req: AuthRequest, res: Response) => {
+        const [totalStudents, subscriptionStats, totalExams, totalAttempts] = await Promise.all([
+            mongoose.model('User').countDocuments({ roleId: { $ne: null } }),
+            mongoose.model('Subscription').aggregate([
+                { $match: { paymentStatus: 'completed' } },
+                { $group: { _id: null, total: { $sum: '$amount' } } }
+            ]),
+            Test.countDocuments({ isPublished: true }),
+            Attempt.countDocuments()
+        ]);
+
+        const totalRevenue = subscriptionStats[0]?.total || 0;
+
+        res.json(
+            ApiResponse.success('Admin stats fetched', {
+                totalStudents,
+                totalRevenue,
+                totalExams,
+                totalAttempts
+            })
         );
     });
 }

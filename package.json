@@ -1,0 +1,12 @@
+{
+  "name": "whatsapp-chat",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix student-platform\" \"npm run dev --prefix backend\"",
+    "build": "npm run build --prefix student-platform && npm run build --prefix backend",
+    "start": "npm run start --prefix backend"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}

@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Users, TrendingUp, DollarSign, BookOpen } from 'lucide-react';
+import analyticsService, { AdminStats } from '../../services/analytics.service';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 
-const Dashboard: React.FC = () => {
-    // Mock data
-    const stats = [
-        { title: 'Total Students', value: '1,234', icon: <Users className="text-white" />, color: 'bg-blue-500' },
-        { title: 'Total Revenue', value: '₹4.5L', icon: <DollarSign className="text-white" />, color: 'bg-emerald-500' },
-        { title: 'Active Exams', value: '42', icon: <BookOpen className="text-white" />, color: 'bg-purple-500' },
-        { title: 'New Subs', value: '+15%', icon: <TrendingUp className="text-white" />, color: 'bg-indigo-600' },
+const AdminDashboard: React.FC = () => {
+    const [stats, setStats] = useState<AdminStats | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const response = await analyticsService.getAdminStats();
+                setStats(response.data);
+            } catch (error) {
+                console.error('Failed to fetch admin stats', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchStats();
+    }, []);
+
+    const statItems = [
+        { title: 'Total Students', value: stats?.totalStudents || 0, icon: <Users className="text-white" />, color: 'bg-blue-500' },
+        { title: 'Total Revenue', value: `₹${stats?.totalRevenue || 0}`, icon: <DollarSign className="text-white" />, color: 'bg-emerald-500' },
+        { title: 'Active Exams', value: stats?.totalExams || 0, icon: <BookOpen className="text-white" />, color: 'bg-purple-500' },
+        { title: 'Total Attempts', value: stats?.totalAttempts || 0, icon: <TrendingUp className="text-white" />, color: 'bg-indigo-600' },
     ];
 
+    // Mock data for chart - Future: Get from backend
     const data = [
         { name: 'Mon', sales: 4000 },
         { name: 'Tue', sales: 3000 },
@@ -23,6 +42,10 @@ const Dashboard: React.FC = () => {
         { name: 'Sun', sales: 3490 },
     ];
 
+    if (loading) {
+        return <div className="p-8 text-center text-gray-500">Loading dashboard...</div>;
+    }
+
     return (
         <div>
             <div className="mb-8">
@@ -31,7 +54,7 @@ const Dashboard: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
-                {stats.map((stat, index) => (
+                {statItems.map((stat, index) => (
                     <div key={index} className="rounded-2xl bg-white p-6 shadow-sm flex items-center justify-between">
                         <div>
                             <p className="text-sm font-medium text-gray-500">{stat.title}</p>
@@ -45,7 +68,7 @@ const Dashboard: React.FC = () => {
             </div>
 
             <div className="rounded-2xl bg-white p-6 shadow-sm">
-                <h3 className="mb-6 text-lg font-bold text-gray-900">Revenue Trend</h3>
+                <h3 className="mb-6 text-lg font-bold text-gray-900">Revenue Trend (Mock)</h3>
                 <div className="h-80 w-full">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={data}>
@@ -62,4 +85,4 @@ const Dashboard: React.FC = () => {
     );
 };
 
-export default Dashboard;
+export default AdminDashboard;
